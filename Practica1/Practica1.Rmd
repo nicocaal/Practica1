@@ -275,3 +275,83 @@ tail(iris.df)
 ```{r}
 summary(iris.df)
 ```
+
+## 7. Fichero JSON
+
+### 7.2. Importar el fichero
+
+```{r}
+library(jsonlite)
+codif <- read_json('data/FileCodificado.json', simplifyVector = TRUE)
+```
+
+```{r}
+save(codif, file='data/results/codif.RData')
+```
+
+### 7.3. Inspección de los datos
+
+```{r}
+str(codif)
+```
+
+```{r}
+head(codif)
+```
+
+```{r}
+tail(codif)
+```
+
+```{r}
+summary(codif)
+```
+
+## 8. Fichero JSON iris_json.json
+
+### 8.1. Importar el fichero iris_json.json
+
+```{r}
+library(jsonlite)
+irisjson <- read_json('data/iris_json.json', simplifyVector = TRUE)
+irisjson2 <- fromJSON('data/iris_json.json', simplifyVector = TRUE)
+```
+
+```{r}
+save(irisjson, file = 'data/results/irisjson.RData')
+```
+
+### 8.2. Inspección de los datos
+
+```{r}
+str(irisjson)
+```
+
+```{r}
+head(irisjson)
+```
+
+```{r}
+tail(irisjson)
+```
+
+```{r}
+summary(irisjson)
+```
+
+### 8.3. Exportar datos en formato JSON
+
+```{r}
+  write_json(iris.df, path = 'data/results/irisdfjson.json')
+  newirisjson <- read_json('data/results/irisdfjson.json', simplifyVector = TRUE)
+  head(newirisjson)
+```
+
+Se recupera bien el archivo.
+
+```{r}
+json.no.pretty <- toJSON(iris.df)
+json.pretty <- toJSON(iris.df, pretty = TRUE)
+```
+
+El parámetro pretty va haciendo saltos de línea para que sea más visible.
