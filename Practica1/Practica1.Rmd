@@ -1,55 +1,15 @@
 ---
-title: "Práctica 1"
-author: "Nicolás Camacho Albiñana"
-date: "`r Sys.Date()`"
+title: "Practica1"
+author: "Nicolás Camacho"
+date: "2026-10-20"
 output:
-  bookdown::pdf_document2:
-    toc: true
-    toc_depth: 3
-    number_sections: true
-    figure_caption: "Figura" # Referencias en castellano
-    table_caption: "Tabla"
-  html_document:
-    echo: true
-    number_sections: true
-    theme: lumen
-    toc: true
-  html_notebook:
-    echo: true
-    number_sections: true
-    toc: true
-  pdf_document:
-    toc: true
-    toc_depth: 3
-    number_sections: true
-  bookdown::html_document2:
-    echo: true
-    number_sections: true
-    theme: spacelab
-    toc: true
-    figure_caption: "Figura"
-    table_caption: "Tabla"
-always_allow_html: true
-params:
-  lang: ES
-lang: "`r switch(params$lang, ES = 'es-ES', EN = 'en-US')`"
-subtitle: "Introducción a la Ciencia de Datos. Máster en Ciencia de Datos- UV"
-language:
-  label:
-    fig: 'Figura '
-    tab: 'Tabla '
-    eq: 'Ecuación '
-    thm: 'Teorema '
-    lem: 'Lema '
-    def: 'Definición '
-    cor: 'Corolario '
-    prp: 'Proposición '
-    exm: 'Ejemplo '
-    exr: 'Ejercicio '
-    proof: 'Demostración. '
-    remark: 'Nota: '
-    solution: 'Solución. '
+  pdf_document: default
+  html_document: default
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## 1. Introducción
 
@@ -88,7 +48,7 @@ head(dfp1.base)
 Aplicando la tabulación como separador entre las variables, se observa que ambas importaciones son equivalentes. Nos quedaremos con la proporcionada por readr, ya que la hora ya está en formato hms.
 
 ```{r}
-install.packages("hms")
+install.packages("hms", repos = "https://cloud.r-project.org")
 library(hms)
 ```
 
