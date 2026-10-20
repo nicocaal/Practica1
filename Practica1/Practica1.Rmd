@@ -1,0 +1,162 @@
+---
+title: "Práctica 1"
+author: "Nicolás Camacho Albiñana"
+date: "`r Sys.Date()`"
+output:
+  bookdown::pdf_document2:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    figure_caption: "Figura" # Referencias en castellano
+    table_caption: "Tabla"
+  html_document:
+    echo: true
+    number_sections: true
+    theme: lumen
+    toc: true
+  html_notebook:
+    echo: true
+    number_sections: true
+    toc: true
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+  bookdown::html_document2:
+    echo: true
+    number_sections: true
+    theme: spacelab
+    toc: true
+    figure_caption: "Figura"
+    table_caption: "Tabla"
+always_allow_html: true
+params:
+  lang: ES
+lang: "`r switch(params$lang, ES = 'es-ES', EN = 'en-US')`"
+subtitle: "Introducción a la Ciencia de Datos. Máster en Ciencia de Datos- UV"
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuación '
+    thm: 'Teorema '
+    lem: 'Lema '
+    def: 'Definición '
+    cor: 'Corolario '
+    prp: 'Proposición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Demostración. '
+    remark: 'Nota: '
+    solution: 'Solución. '
+---
+
+## 1. Introducción
+
+```{r}
+# Creamos la carpeta para los datos si no existe
+if (!file.exists('data')){
+  dir.create('data')
+}
+
+# Creamos la carpeta para la figura
+if (!file.exists('figure')){
+  dir.create('figure')
+}
+```
+
+## 2. Ejemplo: fichero *DFP1_11122015 124700.csv*
+
+### 2.1. Importación del fichero
+
+```{r}
+library(readr)
+fname <- 'data/DFP1_11122015 124700.csv'
+
+dfp1 <- read_delim(fname, delim = "\t") # Con readr
+dfp1.base <- read.csv(fname, sep = "\t") # Con base
+```
+
+```{r}
+head(dfp1)
+```
+
+```{r}
+head(dfp1.base)
+```
+
+Aplicando la tabulación como separador entre las variables, se observa que ambas importaciones son equivalentes. Nos quedaremos con la proporcionada por readr, ya que la hora ya está en formato hms.
+
+```{r}
+install.packages("hms")
+library(hms)
+```
+
+La hora con la importación de readr ya viene en hms, por lo que aplicamos el cambio solo a la importación con base y posteriormente comprobamos que se ha hecho bien la conversión:
+
+```{r}
+hora <- as_hms(dfp1.base$HORA)
+head(hora)
+str(hora)
+```
+
+Ahora cambiamos la fecha a formato POSIX para el dataframe con el que trabajamos y comprobamos que la conversión está bien hecha:
+
+```{r}
+dfp1$FECHA <- as.POSIXlt(dfp1$FECHA, format = '%d/%m/%Y')
+head(dfp1$FECHA)
+str(dfp1$FECHA)
+```
+
+Lo almacenamos en la carpeta results dentro de data:
+
+```{r}
+if (!file.exists('data/results')){
+  dir.create('data/results')
+}
+save(dfp1, file = 'data/results/dfp1.RData')
+```
+
+## 
+
+### 2.2. Inspección de los datos
+
+```{r}
+str(dfp1)
+```
+
+Vemos que tenemos una variable de tipo POSIX llamada FECHA, HORA en hms, Altura es numérica, Combinacion_Canya también lo es y Temperatura también.
+
+```{r}
+head(dfp1)
+```
+
+```{r}
+tail(dfp1)
+```
+
+Con head y tail comprobamos que las instancias contienen las variables que habíamos obtenido antes.
+
+```{r}
+summary(dfp1$FECHA)
+```
+
+Vemos que todas las instancias de fechas son la misma, ya que los cuartiles, mediana, máximo y mínimo son idénticos. Esto nos muestra que todas las instancias están tomadas el mismo día, ya que lo único que cambia es la hora.
+
+```{r}
+summary(dfp1$Altura)
+```
+
+A partir de Altura vemos que la distribución es amplia, ya que va desde un mínimo de 137.8 hasta un máximo de 1089.1, con una media más sesgada hacia el máximo: 785.8
+
+```{r}
+summary(dfp1$Combinacion_Canya)
+```
+
+Combinacion_Canya nos muestra que los únicos valores disponibles son 1, 2, 3.
+
+```{r}
+summary(dfp1$Temperatura)
+```
+
+Las temperaturas por su parte se distribuyen desde 14.4 hasta 14.7.
