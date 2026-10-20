@@ -229,3 +229,49 @@ head(ps.bike)
 ```{r}
 tail(ps.bike)
 ```
+
+```{r}
+# summary(ps.bike) no funciona porque no se puede aplicar al tipo hms
+```
+
+## 5. Fichero data iris.zip
+
+### 5.1. Descomprimir el fichero
+
+```{r}
+unzip('data/iris.zip')
+```
+
+## 6. Fichero data iris.data
+
+### 6.1. Importación del fichero
+
+```{r}
+library(readr)
+iris.df <- read_csv("data/iris/iris.data", col_names = FALSE)
+colnames(iris.df) <- c('sepal length', 'sepal width', 'petal length', 'petal width', 'class')
+```
+
+```{r}
+save(iris.df, file = 'data/results/irisdf.RData')
+```
+
+### 6.2. Inspección de los datos
+
+```{r}
+str(iris.df)
+```
+
+Las cuatro primeras variables son numéricas, ya que contienen longitudes, mientras que la última es un string, ya que son los nombres del tipo de flor.
+
+```{r}
+head(iris.df)
+```
+
+```{r}
+tail(iris.df)
+```
+
+```{r}
+summary(iris.df)
+```
