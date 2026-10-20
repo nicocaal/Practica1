@@ -160,3 +160,72 @@ summary(dfp1$Temperatura)
 ```
 
 Las temperaturas por su parte se distribuyen desde 14.4 hasta 14.7.
+
+## 3. Fichero Transactions from a Bakery
+
+### 3.1. Importación del fichero
+
+```{r}
+library(readr)
+bak.sales <- read_csv("data/bakery_sales_revised.csv")
+```
+
+```{r}
+save(bak.sales, file = 'data/results/bak.sales.RData')
+```
+
+### 3.2. Inspección de los datos
+
+```{r}
+str(bak.sales)
+```
+
+La variable Transaction es numérica y parece indicar el cliente o la compra en la que se ha realizado cada importe, item es un string con el nombre del producto, date_time es la fecha y la hora en string, period_day es un string que marca el periodo de la jornada y weekday_weekend es un string que indica si se trata de un día entre semana o de fin de semana.
+
+```{r}
+head(bak.sales)
+```
+
+```{r}
+tail(bak.sales)
+```
+
+Comprobamos con head y tail que las instancias tienen la variables esperadas.
+
+```{r}
+summary(bak.sales)
+```
+
+```{r}
+unique(bak.sales$period_day)
+```
+
+```{r}
+unique(bak.sales$weekday_weekend)
+```
+
+A partir del summary vemos que Transaction tiene 9684 transacciones en total, Item tiene 94 productos unique en total (aunque se repiten 20507 veces a medida que son comprados varios clientes), date_time tiene también 20507 instancias repartidas en 9182 días (se hacen varias compras en un día), period_day tiene solo 4 posibilidades: morning, afternoon, evening, night y weekday_weekend contiene solo 2: weekend y weekday.
+
+## 4. Fichero SPSS PsychBike.sav
+
+### 4.1. Importación del fichero
+
+```{r}
+library(haven)
+ps.bike <- read_sav('data/PsychBike.sav')
+save(ps.bike, file = 'data/results/ps.bike.RData')
+```
+
+### 4.2. Inspección de los datos
+
+```{r}
+str(ps.bike)
+```
+
+```{r}
+head(ps.bike)
+```
+
+```{r}
+tail(ps.bike)
+```
